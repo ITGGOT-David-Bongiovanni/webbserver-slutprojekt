@@ -5,10 +5,10 @@ class App < Sinatra::Base
 		slim(:login)
 	end
 
-	get '/' do
+	get '/start' do
 		slim(:start)
 	end
-	
+
 	get '/register' do
 		slim (:register)
 	end
@@ -72,7 +72,18 @@ class App < Sinatra::Base
 		else
 			user_id = session[:id] 
 			contacts = db.execute("SELECT username,telephone FROM users WHERE id IN (SELECT contact_id FROM contact WHERE user_id = ?)", [user_id])
-			slim :list, locals:{contacts:contacts}
+			slim(:list, locals:{contacts:contacts})
+		end
+	end
+	get ('/add') do
+		db = SQLite3::Database.open("db/databas.db")
+		if session[:id] == nil
+			redirect('login')
+		else
+			user_id = session[:id]
+			all = db.execute("SELECT username,telephone FROM users WHERE id IS NOT (?)", [user_id]) 
+			# ändra så man inte får med favoriter
+			slim(:add, locals:{all:all})
 		end
 	end
 end           

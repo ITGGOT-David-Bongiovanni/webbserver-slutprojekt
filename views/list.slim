@@ -1,7 +1,12 @@
-        - i = 0
-        - while i < contacts.length
+h1 Contacts
+- i = 0
+- while i < contacts.length
+        div class="contacts"
                 p class="username" = contacts[i][0] 
                 p class="telephone" = contacts[i][1]
-                - i += 1     
-a href="/start" Log out
+                input type="checkbox"
+        - i += 1     
+a href="/start" class="logout" Log out
+a href="/add" class="other" Add More Contacts
+
         
