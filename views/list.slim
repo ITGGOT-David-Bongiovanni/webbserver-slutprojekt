@@ -4,7 +4,10 @@ h1 Contacts
         div class="contacts"
                 p class="username" = contacts[i][0] 
                 p class="telephone" = contacts[i][1]
-                input type="checkbox"
+        
+        form action="/remove" method="POST"
+                input type="hidden" value="#{contacts[i][2]}" name="add_user_id"
+                input type="submit" value="remove"
         - i += 1     
 a href="/start" class="logout" Log out
 a href="/add" class="other" Add More Contacts
