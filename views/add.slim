@@ -1,15 +1,17 @@
 h1 Add
 - i = 0
-- while i < all.length
-        div class="contacts"
-                p class="username" = all[i][0] 
-                p class="telephone" = all[i][1]
-        form action="/add" method="POST"
-                input type="hidden" value="#{all[i][2]}" name="add_user_id"
-                input type="submit" value="add"
-        - i += 1     
+div class="info"
+        - while i < all.length
+                div class="list"
+                        div class="contacts"
+                                p class="username" = all[i][0] 
+                                p class="telephone" = all[i][1]
+                        form action="/add" method="POST"
+                                input type="hidden" value="#{all[i][2]}" name="add_user_id"
+                                input type="submit" value="add"
+                        - i += 1     
 a href="/start" class="logout" Log out
-a href="/list" class="other" See Favorites
+a href="/list" class="other" See Contacts
 
 
 

@@ -1,5 +1,8 @@
 body {
     text-decoration: none;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
 h1 {
@@ -9,12 +12,13 @@ h1 {
 .contacts {
     display: flex;
     flex-direction: row;
+    
 }
 
 .logout, .other {
     margin: 10px;
     text-decoration: none;
-    color: hotpink;
+    color: blue;
 }
 
 .username, .telephone {
@@ -27,4 +31,28 @@ input[type=text], input[type=password] {
     margin: 8px 0px;
     display: flex;
     flex-direction: row;
+}
+
+.list {
+    display: flex;
+    flex-direction: row;
+    margin: 20px;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+.contact_img {
+    position: absolute;
+    top: 200px;
 }

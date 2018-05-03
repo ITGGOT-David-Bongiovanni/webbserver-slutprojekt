@@ -1,5 +1,8 @@
+require_relative './model/model'
 class App < Sinatra::Base
+
 	enable :sessions
+	include SlutprojektDB
 
 	get '/login' do
 		slim(:login)
@@ -26,7 +29,7 @@ class App < Sinatra::Base
 			redirect('/error')
 		end
 		begin
-		user_id = db.execute("SELECT id FROM users WHERE username=?", [username])
+		user_id = 	db.execute("SELECT id FROM users WHERE username=?", [username])
 		password_digest = db.execute("SELECT password FROM users WHERE username=?", [username]).join
 		password_digest = BCrypt::Password.new(password_digest)
 		rescue
@@ -50,8 +53,8 @@ class App < Sinatra::Base
 		password2 = params["password2"]
 		telephone = params["telephone"]
 		password_digest = BCrypt::Password.create("#{password}")
-		if telephone.length > 0
-			if username.length > 0
+		if telephone.length > 0 && telephone.length < 21
+			if username.length > 0 && username.length < 21
 				if password == password2 && password.length > 0
 					 begin
 						db.execute("INSERT INTO users (username, password, telephone) VALUES (?, ?, ?)", [username,password_digest,telephone])
@@ -65,11 +68,11 @@ class App < Sinatra::Base
 					redirect('/error')
 				end
 			else
-				session[:message] = "The username is unavailable"
+				session[:message] = "The username is to long or to short (max 20 characters)"
 				redirect('/error')
 			end
 		else
-			session[:message] = "Telephone number is unavailable"
+			session[:message] = "Telephone number is to long or short (max 20 characters)"
 			redirect('/error')	
 		end
 	end
@@ -91,7 +94,6 @@ class App < Sinatra::Base
 		else
 			user_id = session[:id]
 			all = db.execute("SELECT username,telephone,id FROM users WHERE id IS NOT (?)", [user_id]) 
-			# ändra så man inte får med favoriter
 			slim(:add, locals:{all:all})
 		end
 	end
